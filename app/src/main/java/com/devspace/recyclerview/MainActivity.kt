@@ -1,5 +1,6 @@
 package com.devspace.recyclerview
 
+import android.content.Intent
 import android.media.Image
 import android.os.Bundle
 import android.widget.ImageView
@@ -14,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
+
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
         rvList.adapter=adapter
         rvList.layoutManager = LinearLayoutManager(this)
-        adapter.submitList(classContato)
+        adapter.submitList(Contato)
 
         iv_list.setOnClickListener{
             rvList.layoutManager = LinearLayoutManager(this)
@@ -40,13 +41,19 @@ class MainActivity : AppCompatActivity() {
         }
 
         adapter.setOnClickListener { Contato ->
+            val intent = Intent(this,ContatoDetalhesActivity::class.java)
+            intent.putExtra("nome", Contato.name)
+            intent.putExtra("phone", Contato.phone)
+            intent.putExtra("icon", Contato.icno)
+            startActivity(intent)
+
             
         }
 
     }
 }
 
-val classContato = listOf(
+val Contato = listOf(
     class_contato(
         name = "Miguel",
         phone = "(55) 47 98823-2445",
